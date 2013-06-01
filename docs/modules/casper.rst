@@ -715,7 +715,19 @@ Prints something to stdout, optionally with some fancy color (see the :ref:`colo
 
 **Signature:** ``evaluate(Function fn[, arg1[, arg2[, …]]])``
 
-Basically `PhantomJS' WebPage#evaluate <https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-webpage-evaluate>`_ equivalent. Evaluates an expression **in the current page DOM context**::
+Basically `PhantomJS' WebPage#evaluate <https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-webpage-evaluate>`_ equivalent. Calls a function **in the current page DOM context** and returns the value synchronously::
+
+    var userName = casper.evaluate(function() {
+        return document.querySelector('#username').value;
+    });
+
+.. note::
+
+   For filling and submitting forms, rather use the `fill()`_ method.
+
+.. note::
+
+   You can pass arguments to the `evaluate()`_ function like this:
 
     casper.evaluate(function(username, password) {
         document.querySelector('#username').value = username;
@@ -723,13 +735,7 @@ Basically `PhantomJS' WebPage#evaluate <https://github.com/ariya/phantomjs/wiki/
         document.querySelector('#submit').click();
     }, 'sheldon.cooper', 'b4z1ng4');
 
-.. note::
-
-   For filling and submitting forms, rather use the `fill()`_ method.
-
-.. warning::
-
-   The pre-1.0 way of passing arguments using an object has been kept for BC purpose, though it may `not work in some case <https://github.com/n1k0/casperjs/issues/349>`_; so you're encouraged to use the method described above.
+The pre-1.0 way of passing arguments using an object has been kept for BC purpose, though it may `not work in some case <https://github.com/n1k0/casperjs/issues/349>`_
 
 .. topic:: Understanding ``evaluate()``
 
